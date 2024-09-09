@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric.js Canvas Example</title>
+    <script src="./fabric.min.js"></script>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="1800" height="1000" ,></canvas>
+    <script>
+        // Initialize Fabric.js canvas
+        var canvas = new fabric.Canvas('myCanvas');
+        const svgPath = './svg.svg';
+        const importSvgCode = (ss, canvas) => {
+            if (ss) {
+                fabric.loadSVGFromString(ss).then(output => {
+                    parseSvg(output, canvas);
+                });
+                canvas.requestRenderAll();
+            }
+        };
+
+
+        const parseSvg = (output, canvas) => {
+            console.log(output)
+            // eslint-disable-next-line
+            const { objects, elements, options, allElements } = output;
+
+            const index1 = allElements.findIndex((svgTag) => svgTag.tagName === 'extraproperty');
+            const width = allElements[index1].getAttribute('width');
+            console.log(width)
+            objects.forEach((obj, index) => {
+                if ( obj.type === 'text') {
+                    const text = new fabric.Textbox(obj.text, {
+                        ...obj,
+                        width:parseInt(width)+40,
+                    })
+                    return canvas?.add(text);
+                }
+                else {
+                    canvas.add(obj);
+                }
+            });
+        }
+        const generateUniqueId = (object) => {
+            return object.type + "_" + Number(Math.floor(Math.random() * 900) + 100); // Generates a number between 100 and 999
+        };
+        const shadowOptions = {
+            color: "#000000",
+            blur: 30,
+            offsetX: 0,
+            offsetY: 0,
+            affectStroke: false,
+        };
+
+        const importSVG = (file) => {
+            if (file) {
+                var site_url = file;
+                fabric.loadSVGFromURL(site_url).then(output => {
+                    parseSvg(output, canvas);
+                });
+                canvas.renderAll();
+            }
+        };
+
+        importSVG(svgPath)
+
+    </script>
+</body>
+
+</html>
