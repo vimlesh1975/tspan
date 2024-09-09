@@ -4,9 +4,9 @@
 <desc>Created with Fabric.js 6.3.0</desc>
 <defs>
 </defs>
-<g transform="matrix(1 0 0 1 396.4786 123.1509)" style="filter: url(#SVGID_7);" id="textbox_131"  >
-<filter id="SVGID_7" y="-20%" height="140%" x="-20%" width="140%" >
-	<feGaussianBlur in="SourceAlpha" stdDeviation="0"></feGaussianBlur>
+<g transform="matrix(1 0 0 1 491.11 313.904)" style="filter: url(#SVGID_7);" id="textbox_137"  >
+<filter id="SVGID_7" y="-20.88%" height="141.76%" x="-20.34%" width="140.68%" >
+	<feGaussianBlur in="SourceAlpha" stdDeviation="1"></feGaussianBlur>
 	<feOffset dx="0" dy="0" result="oBlur" ></feOffset>
 	<feFlood flood-color="rgb(0,0,0)" flood-opacity="1"/>
 	<feComposite in2="oBlur" operator="in" />
@@ -15,7 +15,7 @@
 		<feMergeNode in="SourceGraphic"></feMergeNode>
 	</feMerge>
 </filter>
-<extraproperty textAlign="left" width="614" originalFontSize="45" lines='3'></extraproperty>
-		<text xml:space="preserve" class="textbox_131" font-family="Arial" font-size="45" font-style="normal" font-weight="bold" style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-307" y="-44.8497" style="white-space: pre; ">textbox_131  kjbgfkbsd </tspan><tspan x="-307" y="14.1363" >kihiufhf houih ohohfdfho</tspan><tspan x="-307" y="73.1223" >odfhodfh odsfh</tspan></text>
+<extraproperty textAlign="center" width="597" originalFontSize="45" lines='4'></extraproperty>
+		<text xml:space="preserve" class="textbox_137" font-family="Arial" font-size="45" font-style="normal" font-weight="bold" style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-159.6643" y="-74.3427" >Vimlesh kumar</tspan><tspan x="-107.0728" y="-15.3567" >Tanti DDK</tspan><tspan x="-85.0012" y="43.6293" >Mumbai</tspan><tspan x="-96.2732" y="102.6153" >Engineer</tspan></text>
 </g>
 </svg>

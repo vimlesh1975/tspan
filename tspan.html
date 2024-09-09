@@ -7,14 +7,14 @@
     <title>Fabric.js Canvas Example</title>
     <script src="./fabric.min.js"></script>
     <style>
-        canvas {
-            border: 1px solid black;
+        body {
+            margin: 0;
         }
     </style>
 </head>
 
 <body>
-    <canvas id="myCanvas" width="1800" height="1000" ,></canvas>
+    <canvas id="myCanvas" width="1800" height="1000"></canvas>
     <script>
         // Initialize Fabric.js canvas
         var canvas = new fabric.Canvas('myCanvas');
@@ -38,12 +38,25 @@
             const width = allElements[index1].getAttribute('width');
             const textAlign = allElements[index1].getAttribute('textAlign');
             const lines = allElements[index1].getAttribute('lines');
-            console.log(width,textAlign,lines)
+            console.log(width, textAlign, lines)
             objects.forEach((obj, index) => {
-                if ( obj.type === 'text') {
-                    const text = new fabric.Textbox(obj.text, {
+                if (obj.type === 'text') {
+                    const currentElement = elements[index];
+                    const tspan = currentElement.children[0]
+                    const { x, y } = tspan.attributes;
+
+                    var aa = '';
+                    Array.from(currentElement.children).forEach((child, index) => {
+                        aa +=child.innerHTML +'\n';
+                    });
+                    console.log(aa)
+                    obj.left += Number(x.value)
+                    obj.top += Number(y.value)
+
+                    const text = new fabric.Textbox(aa, {
                         ...obj,
-                        width:parseInt(width)+40,
+                        // textAlign
+                        // width: parseInt(width),
                     })
                     return canvas?.add(text);
                 }
