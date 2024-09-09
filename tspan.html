@@ -36,7 +36,9 @@
 
             const index1 = allElements.findIndex((svgTag) => svgTag.tagName === 'extraproperty');
             const width = allElements[index1].getAttribute('width');
-            console.log(width)
+            const textAlign = allElements[index1].getAttribute('textAlign');
+            const lines = allElements[index1].getAttribute('lines');
+            console.log(width,textAlign,lines)
             objects.forEach((obj, index) => {
                 if ( obj.type === 'text') {
                     const text = new fabric.Textbox(obj.text, {
