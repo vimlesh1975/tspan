@@ -32,18 +32,33 @@
             console.log(output);
             // eslint-disable-next-line
             const { objects, elements, options, allElements } = output;
+
+            // Find extraproperty tags
             const extrapropertyTags = allElements.filter((svgTag) => svgTag.tagName === 'extraproperty');
+
+            if (extrapropertyTags.length === 0) {
+                console.log('No extraproperty tags found. Using default values.');
+            }
+
             var textNumber = 0;
             objects.forEach((obj, index) => {
                 if (obj.type === 'text') {
 
-                    // Extract the extraproperty tag if needed
-                    const width = extrapropertyTags[textNumber].getAttribute('width');
-                    const textAlign = extrapropertyTags[textNumber].getAttribute('textAlign');
-                    const lines = extrapropertyTags[textNumber].getAttribute('lines');
+                    // Set default values if no extraproperty tags found
+                    let width = 200;
+                    let textAlign = 'left';
+                    let lines = 1;
+
+                    if (extrapropertyTags.length > 0) {
+                        // Use extraproperty tag values if available
+                        width = extrapropertyTags[textNumber]?.getAttribute('width') || width;
+                        textAlign = extrapropertyTags[textNumber]?.getAttribute('textAlign') || textAlign;
+                        lines = extrapropertyTags[textNumber]?.getAttribute('lines') || lines;
+                        textNumber++;
+                    }
+
                     console.log(width, textAlign, lines);
-                    textNumber++;
-                    
+
                     const currentElement = elements[index];
 
                     // Concatenate all the tspans into one text with newline characters
@@ -52,7 +67,6 @@
                         combinedText += tspan.innerHTML + '\n'; // Adds each tspan's text and a newline
                     });
 
-                    // Remove the last newline if unnecessary
                     combinedText = combinedText.trimEnd();
 
                     const tspan = currentElement.children[0];
@@ -62,11 +76,11 @@
 
                     // Adjust the x position based on alignment
                     if (textAlign === 'center') {
-                        leftPosition = obj.left - parseInt(width) / 2; 
+                        leftPosition = obj.left - parseInt(width) / 2;
                     } else if (textAlign === 'right') {
                         leftPosition = obj.left - parseInt(width) / 2;
                     } else {
-                        leftPosition = obj.left + Number(x.value); 
+                        leftPosition = obj.left + Number(x.value);
                     }
 
                     // Create a new Textbox with combined tspan text
@@ -74,8 +88,8 @@
                         ...obj,
                         left: leftPosition,
                         top: obj.top + Number(y.value),
-                        textAlign: textAlign, // Set text alignment from extraproperty
-                        width: parseInt(width), // Set width from extraproperty
+                        textAlign: textAlign,
+                        width: parseInt(width),
                     });
 
                     // Add the text to the canvas
