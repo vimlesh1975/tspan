@@ -14,7 +14,19 @@
 </head>
 
 <body>
-    <canvas id="myCanvas" width="1800" height="1000"></canvas>
+    <div style="display: flex;">
+    <div>
+        <h1>Fabricjs Canvas</h1>
+        <canvas id="myCanvas" width="900" height="1000"></canvas>
+    </div>
+    <div>
+        <h1>SVG</h1>
+        <div id="svgContainer">
+            <!-- dummy -->
+                </div>
+    </div>
+  
+</div>
     <script>
         // Initialize Fabric.js canvas
         var canvas = new fabric.Canvas('myCanvas');
@@ -123,6 +135,19 @@
         };
 
         importSVG(svgPath)
+        const loadSVGIntoDiv = (file) => {
+            if (file) {
+                fetch(file)
+                    .then(response => response.text())
+                    .then(svgData => {
+                        const svgContainer = document.getElementById('svgContainer');
+                        svgContainer.innerHTML = svgData; // Insert the SVG content into the div
+                    })
+                    .catch(error => console.error('Error loading SVG:', error));
+            }
+        };
+
+        loadSVGIntoDiv(svgPath);
 
     </script>
 </body>
