@@ -28,43 +28,65 @@
             }
         };
 
-
         const parseSvg = (output, canvas) => {
-            console.log(output)
+            console.log(output);
             // eslint-disable-next-line
             const { objects, elements, options, allElements } = output;
-
-            const index1 = allElements.findIndex((svgTag) => svgTag.tagName === 'extraproperty');
-            const width = allElements[index1].getAttribute('width');
-            const textAlign = allElements[index1].getAttribute('textAlign');
-            const lines = allElements[index1].getAttribute('lines');
-            console.log(width, textAlign, lines)
+            const extrapropertyTags = allElements.filter((svgTag) => svgTag.tagName === 'extraproperty');
+            var textNumber = 0;
             objects.forEach((obj, index) => {
                 if (obj.type === 'text') {
+
+                    // Extract the extraproperty tag if needed
+                    const width = extrapropertyTags[textNumber].getAttribute('width');
+                    const textAlign = extrapropertyTags[textNumber].getAttribute('textAlign');
+                    const lines = extrapropertyTags[textNumber].getAttribute('lines');
+                    console.log(width, textAlign, lines);
+                    textNumber++;
+                    
                     const currentElement = elements[index];
-                    const tspan = currentElement.children[0]
+
+                    // Concatenate all the tspans into one text with newline characters
+                    let combinedText = '';
+                    Array.from(currentElement.children).forEach((tspan) => {
+                        combinedText += tspan.innerHTML + '\n'; // Adds each tspan's text and a newline
+                    });
+
+                    // Remove the last newline if unnecessary
+                    combinedText = combinedText.trimEnd();
+
+                    const tspan = currentElement.children[0];
                     const { x, y } = tspan.attributes;
 
-                    var aa = '';
-                    Array.from(currentElement.children).forEach((child, index) => {
-                        aa +=child.innerHTML +'\n';
-                    });
-                    console.log(aa)
-                    obj.left += Number(x.value)
-                    obj.top += Number(y.value)
+                    let leftPosition = obj.left;
 
-                    const text = new fabric.Textbox(aa, {
+                    // Adjust the x position based on alignment
+                    if (textAlign === 'center') {
+                        leftPosition = obj.left - parseInt(width) / 2; 
+                    } else if (textAlign === 'right') {
+                        leftPosition = obj.left - parseInt(width) / 2;
+                    } else {
+                        leftPosition = obj.left + Number(x.value); 
+                    }
+
+                    // Create a new Textbox with combined tspan text
+                    const text = new fabric.Textbox(combinedText, {
                         ...obj,
-                        // textAlign
-                        // width: parseInt(width),
-                    })
-                    return canvas?.add(text);
-                }
-                else {
+                        left: leftPosition,
+                        top: obj.top + Number(y.value),
+                        textAlign: textAlign, // Set text alignment from extraproperty
+                        width: parseInt(width), // Set width from extraproperty
+                    });
+
+                    // Add the text to the canvas
+                    return canvas.add(text);
+                } else {
+                    // Add non-text objects directly to the canvas
                     canvas.add(obj);
                 }
             });
-        }
+        };
+
         const generateUniqueId = (object) => {
             return object.type + "_" + Number(Math.floor(Math.random() * 900) + 100); // Generates a number between 100 and 999
         };
