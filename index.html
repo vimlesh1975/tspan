@@ -60,17 +60,15 @@
                     // Set default values if no extraproperty tags found
                     let width = 200;
                     let textAlign = 'left';
-                    let lines = 1;
 
                     if (extrapropertyTags.length > 0) {
                         // Use extraproperty tag values if available
                         width = extrapropertyTags[textNumber]?.getAttribute('width') || width;
                         textAlign = extrapropertyTags[textNumber]?.getAttribute('textAlign') || textAlign;
-                        lines = extrapropertyTags[textNumber]?.getAttribute('lines') || lines;
                         textNumber++;
                     }
 
-                    console.log(width, textAlign, lines);
+                    console.log(width, textAlign);
 
                     const currentElement = elements[index];
 
